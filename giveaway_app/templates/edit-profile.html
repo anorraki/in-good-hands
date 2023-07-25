@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="login-page">
+        <h2>Edytuj profil</h2>
+        <form method="post" class="form-group">
+        {% csrf_token %}
+            <div class="form-group">
+                <table class="form-group">
+                    {% for field in form %}
+                    <tr>
+                        <td style="font-size: 20px">
+                            {{ field.label }}
+                        </td>
+                        <td>
+                            {{ field }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div style="font-size: 20px">{{ message }}</div>
+            <div class="form-group form-group--buttons">
+                <a href="{% url 'change_password' %}" class="btn btn--without-border">Zmień hasło</a>
+                <button class="btn" type="submit">Zatwierdź zmiany</button>
+            </div>
+        </form>
+    </section>
+{% endblock %}

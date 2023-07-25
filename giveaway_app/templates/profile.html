@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="login-page">
+        <h2>Profil użytkownika</h2>
+        <div class="steps--container">
+            <div class="steps--item">
+                <h3>Imię</h3>
+                <p>{{ user.first_name }}</p>
+            </div>
+            <div class="steps--item">
+                <h3>Nazwisko</h3>
+                <p>{{ user.last_name }}</p>
+            </div>
+            <div class="steps--item">
+                <h3>Email</h3>
+                <p>{{ user.email }}</p>
+            </div>
+        </div>
+
+
+    </section>
+
+    <section id="donations">
+        <h2>Przekazane dary</h2>
+        <div class="steps--container">
+            <table class="steps--item">
+                <tr>
+                    <th>
+                        <div class="steps--item">
+                            <span class="icon icon--hands"></span>
+                            <h3>Liczba przekazanych worków</h3>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="steps--item">
+                            <span class="icon icon--arrow"></span>
+                            <h3>Organizacja, której przekazano zbiórkę</h3>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="steps--item">
+                            <span class="icon icon--glasses"></span>
+                            <h3>Rodzaj rzeczy</h3>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="steps--item">
+                            <span class="icon icon--courier"></span>
+                            <h3>Data odbioru</h3>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="steps--item">
+                            <span class="icon icon--courier"></span>
+                            <h3>Status darowizny</h3>
+                        </div>
+                    </th>
+                    {% for donation in donations %}
+                        <tr {% if donation.is_taken == 1 %}style="background-color: lightgray"{% endif %}>
+                            <td>
+                                <p>{{ donation.quantity }}</p>
+                            </td>
+                            <td>
+                                <p>{{ donation.institution }}</p>
+                            </td>
+                            <td>
+                                <p>{% for category in donation.categories.all %}{{ category.name }}<br>{% endfor %}</p>
+                            </td>
+                            <td>
+                                <p>{{ donation.pick_up_date }}</p>
+                            </td>
+                            <td>
+                                <p>{% if donation.is_taken == True %}Odebrano{% else %}Nieodebrano<br>
+                                    <a href="/profile/taken-donation/{{ donation.id }}" class="steps btn">Zmień</a></p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+            </table>
+
+        </div>
+    </section>
+{% endblock %}
